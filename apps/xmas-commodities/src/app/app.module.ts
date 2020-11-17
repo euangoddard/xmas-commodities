@@ -14,7 +14,7 @@ import { AppState, reducer } from './reducers';
   declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, { relativeLinkResolution: 'legacy' }),
     StoreModule.forRoot<AppState>({ game: reducer }, {}),
     EffectsModule.forRoot([GameEffects]),
   ],
