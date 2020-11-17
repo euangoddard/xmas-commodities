@@ -1,6 +1,22 @@
+@use "../../styles/material-color" as mc;
+
 .layout-grid {
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 2fr;
+}
+
+.grey-bg {
+  background-color: mc.material-color(blue-grey, 800);
+  margin: 0;
+  padding: 1rem;
+}
+
+.gap-r {
+  margin-right: 1rem;
+}
+
+.total-center {
+  text-align:center;
 }
 
 .commodities-grid {
@@ -8,4 +24,6 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   justify-items: auto;
   gap: 1rem;
+  background-color: mc.material-color(blue-grey, 800);
+  padding: 0 1rem 1rem;
 }

@@ -1,20 +1,22 @@
-<h3>Cash balance: {{ cash$ | async | currency }}</h3>
+<h3 class="cash-balance">Cash balance: {{ cash$ | async | currency }}</h3>
 
 <article
   *ngFor="let holding of holdings$ | async"
   [style.--theme-color]="holding.commodity.colour"
+  class="holding"
 >
-  <h3 class="holding">{{ holding.commodity.name }}</h3>
-  <p>
-    <span>{{ holding.holding | number }}</span>
-    <span>{{ holding.value | currency }}</span>
-  </p>
-  <button
-    type="button"
-    class="button sell"
-    [disabled]="!holding.holding"
-    (click)="sellOutPosition(holding.commodity)"
-  >
-    Sell all
-  </button>
+  <h3>
+    {{ holding.commodity.name }}
+    <span class="expander"></span>
+    <button
+      type="button"
+      class="button sell"
+      [disabled]="!holding.holding"
+      (click)="sellOutPosition(holding.commodity)"
+    >
+      Sell all
+    </button>
+  </h3>
+  <div class="metric"><small>Shares</small>{{ holding.holding | number }}</div>
+  <div class="metric"><small>Value</small>{{ holding.value | currency }}</div>
 </article>

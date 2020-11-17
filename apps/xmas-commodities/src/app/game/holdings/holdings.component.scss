@@ -1,23 +1,68 @@
-h3.holding {
-  margin: 0;
-  display: flex;
-  align-items: center;
+@use "../../../styles/material-color" as mc;
 
-  &::before {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--theme-color);
-    content: '';
-    margin-inline-end: 0.75rem;
-  }
+:host {
+  display: block;
+  text-align: center;
+  margin-right: 1rem;
+  background-color: mc.material-color(blue-grey, 800);
+  padding: 1rem;
+}
+
+.cash-balance {
+  padding: 1rem;
+  background-color: mc.material-color(blue-grey, 700);
+  box-shadow: 0 0 8px 4px rgba(mc.material-color(green, A700), 0.7);
+  margin: 0 0 1rem;
 }
 
 p {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.holding {
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+
+  > * {
+    background-color: mc.material-color(blue-grey, 700);
+    padding: 1rem;
+  }
+
+  h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    &::before {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--theme-color);
+      content: '';
+      margin-inline-end: 0.75rem;
+    }
+
+    .expander {
+      flex: 1 1 auto;
+    }
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+
+    small {
+      opacity: 0.7;
+      margin-bottom: 4px;
+    }
+  }
 }
 
 .button {
