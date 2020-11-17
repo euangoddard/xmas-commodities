@@ -1,0 +1,41 @@
+@use "../../../styles/material-color" as mc;
+
+:host {
+  background: mc.material-color(blue-grey, 800);
+}
+
+.data {
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: 2fr 1fr;
+}
+
+h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--theme-color);
+    content: '';
+    margin-inline-end: 0.75rem;
+  }
+}
+
+.prices {
+  display: flex;
+  align-items: center;
+}
+
+xmas-commodities-spark-line {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--theme-color);
+}

@@ -1,0 +1,60 @@
+@use "../../../styles/material-color" as mc;
+
+:host {
+  padding: 0 1.5rem;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.marker {
+  margin-right: 0.5rem;
+}
+
+.value {
+  padding: 0.5rem 0.25rem;
+}
+
+.positive {
+  .marker {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 6px 12px 6px;
+    border-color: transparent transparent mc.material-color(green, 800)
+      transparent;
+  }
+
+  .value {
+    background-color: rgba(mc.material-color(green, 800), 0.5);
+  }
+}
+
+.negative {
+  .marker {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 6px 0 6px;
+    border-color: mc.material-color(red, 800) transparent transparent
+      transparent;
+  }
+
+  .value {
+    background-color: rgba(mc.material-color(red, 800), 0.5);
+  }
+}
+
+.unchanged {
+  .marker {
+    &::after {
+      content: '=';
+    }
+  }
+
+  .value {
+    background-color: mc.material-color(blue-grey, 700);
+  }
+}

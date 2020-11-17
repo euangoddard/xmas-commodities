@@ -1,0 +1,14 @@
+<div class="layout-grid">
+  <h2>Current holdings</h2>
+  <h2>Available commodities</h2>
+  <div>
+    <xmas-commodities-holdings></xmas-commodities-holdings>
+  </div>
+  <div class="commodities-grid">
+    <xmas-commodities-commodity
+      *ngFor="let commodity of commodities$ | async; trackBy: trackById"
+      [commodity]="commodity"
+    >
+    </xmas-commodities-commodity>
+  </div>
+</div>

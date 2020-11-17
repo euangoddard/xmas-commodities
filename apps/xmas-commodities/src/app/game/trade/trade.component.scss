@@ -1,0 +1,50 @@
+@use "../../../styles/material-color" as mc;
+
+:host {
+  padding: 0.5rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(auto, auto));
+  align-items: center;
+}
+
+hr {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  border: none;
+  border-top: 1px solid mc.material-color(blue-grey, 900);
+  height: 1px;
+  width: 100%;
+}
+
+span {
+  padding: 0.5rem 1rem;
+}
+
+.input {
+  appearance: none;
+  color: inherit;
+  background: mc.material-color(blue-grey, 900);
+  border: 1px solid;
+  font-family: inherit;
+  padding: 0.5rem 1rem;
+  text-align: right;
+  width: 4rem;
+
+  &.buy {
+    border-color: mc.material-color(green, A400);
+  }
+
+  &.sell {
+    border-color: mc.material-color(red, A400);
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}

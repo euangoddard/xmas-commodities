@@ -1,0 +1,45 @@
+<hr />
+
+<span>Buy</span>
+<span
+  ><input
+    type="number"
+    [formControl]="controls.buy"
+    class="buy input"
+    step="1"
+    min="1"
+/></span>
+<span>@ {{ price | currency }}</span>
+<span
+  ><button
+    [disabled]="controls.buy.invalid"
+    class="buy button"
+    type="button"
+    (click)="buy()"
+  >
+    Buy
+  </button></span
+>
+
+<hr />
+
+<span>Sell</span>
+<span
+  ><input
+    type="number"
+    [formControl]="controls.sell"
+    class="sell input"
+    step="1"
+    min="1"
+/></span>
+<span>@ {{ price | currency }}</span>
+<span
+  ><button
+    [disabled]="controls.sell.invalid"
+    class="sell button"
+    type="button"
+    (click)="sell()"
+  >
+    Sell
+  </button></span
+>

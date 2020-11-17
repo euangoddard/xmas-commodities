@@ -1,0 +1,12 @@
+.fill {
+  fill: var(--theme-color);
+  fill-opacity: 0.5;
+  stroke-linecap: butt;
+}
+
+.line {
+  stroke: var(--theme-color);
+  stroke-width: 1%;
+  fill: transparent;
+  stroke-linecap: butt;
+}

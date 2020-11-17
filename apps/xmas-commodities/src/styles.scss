@@ -1,1 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+@use "styles/material-color" as mc;
+
+$sans-serif-font-stack: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
+  Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+
+$monospace-font-stack: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo,
+  Courier, monospace;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: mc.material-color(blue-grey, 900);
+  color: mc.material-color(grey, 50);
+
+  font-family: $monospace-font-stack;
+  font-size: 16px;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 500;
+}
+
+:root {
+  --theme-color: #fff;
+}
+
+.button {
+  appearance: none;
+  border: none;
+  color: inherit;
+  background: transparent;
+  font-family: inherit;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  width: 4rem;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &.buy {
+    background: mc.material-color(green, A700);
+  }
+
+  &.sell {
+    background: mc.material-color(red, A700);
+  }
+}

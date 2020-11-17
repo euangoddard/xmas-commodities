@@ -1,0 +1,20 @@
+<section class="data">
+  <h3>
+    {{ commodity.name }}
+  </h3>
+  <xmas-commodities-spark-line
+    [prices]="prices$ | async"
+    [size]="100"
+  ></xmas-commodities-spark-line>
+  <p class="prices">
+    {{ lastPrice$ | async | currency }}
+    <xmas-commodities-change
+      [change]="change$ | async"
+    ></xmas-commodities-change>
+  </p>
+</section>
+
+<xmas-commodities-trade
+  [price]="lastPrice$ | async"
+  [commodity]="commodity"
+></xmas-commodities-trade>

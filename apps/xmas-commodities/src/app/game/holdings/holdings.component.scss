@@ -1,0 +1,25 @@
+h3.holding {
+  margin: 0;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--theme-color);
+    content: '';
+    margin-inline-end: 0.75rem;
+  }
+}
+
+p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button {
+  width: auto;
+}
