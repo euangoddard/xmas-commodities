@@ -2,7 +2,7 @@
 [build]
 command = "nx build --prod"
 functions = "functions"
-publish = "dist"
+publish = "dist/apps/xmas-commodities"
 
 [dev]
 command = "nx serve"
