@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import {
   buyCommodity,
   fetchPriceDataSuccess,
+  incrementDate,
   sellCommodity,
   sellOutPosition,
   startGame,
@@ -12,14 +13,13 @@ import { Mapping } from './types';
 import { last } from './utils';
 
 const INITIAL_CASH_BALANCE = 10000;
-const START_DATE = new Date(2020, 11, 1, 9);
 export const COMMISSION = 10;
 
 export interface GameState {
   playing: boolean;
   cash: number;
   prices: PricesData | null;
-  date: Date | null;
+  date: number | null;
   holdings: Mapping<number>;
 }
 
@@ -43,12 +43,15 @@ const gameReducer = createReducer(
       playing: true,
       cash: INITIAL_CASH_BALANCE,
       prices: null,
-      date: START_DATE,
+      date: 0,
       holdings: {},
     };
   }),
   on(stopGame, (state) => {
     return { ...state, playing: false };
+  }),
+  on(incrementDate, (state) => {
+    return { ...state, date: (state.date || 0) + 1 };
   }),
   on(fetchPriceDataSuccess, (state, { prices }) => {
     return { ...state, prices };

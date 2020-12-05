@@ -16,7 +16,7 @@
 }
 
 .total-center {
-  text-align:center;
+  text-align: center;
 }
 
 .commodities-grid {
@@ -26,4 +26,8 @@
   gap: 1rem;
   background-color: mc.material-color(blue-grey, 800);
   padding: 0 1rem 1rem;
+}
+
+.date {
+  text-align: center;
 }

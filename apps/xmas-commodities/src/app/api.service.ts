@@ -12,7 +12,7 @@ export class ApiService {
 
   getPrices(): Observable<PricesData> {
     return this.httpClient
-      .get<{ data: PricesData }>('/.netlify/functions/prices')
-      .pipe(pluck('data'));
+      .get<{ prices: PricesData }>('/.netlify/functions/prices')
+      .pipe(pluck('prices'));
   }
 }

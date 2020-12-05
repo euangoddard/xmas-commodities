@@ -1,11 +1,11 @@
 import { INIT } from '@ngrx/store';
 import {
   buyCommodity,
-  fetchPriceDataSuccess,
+  fetchPriceDataSuccess, incrementDate,
   sellCommodity,
   sellOutPosition,
   startGame,
-  stopGame,
+  stopGame
 } from './actions';
 import { PriceData } from './game/game.models';
 import { GameState, reducer } from './reducers';
@@ -39,7 +39,7 @@ describe('Reducers', () => {
           ...getInitialState(),
           cash: 0,
           prices: PRICES_DATA,
-          date: new Date(),
+          date: 64,
           holdings: { '1': 2 },
         },
         startGame,
@@ -48,13 +48,13 @@ describe('Reducers', () => {
       playing: true,
       cash: 10000,
       prices: null,
-      date: new Date(2020, 11, 1, 9),
+      date: 0,
       holdings: {},
     });
   });
 
   it('should support the stop game action', () => {
-    const date = new Date();
+    const date = 45;
     expect(
       reducer(
         {
@@ -76,6 +76,29 @@ describe('Reducers', () => {
     });
   });
 
+  it('should support the incrementDate action', () => {
+    const date = 45;
+    expect(
+      reducer(
+        {
+          ...getInitialState(),
+          cash: 346,
+          playing: true,
+          prices: PRICES_DATA,
+          date,
+          holdings: { '2': 45 },
+        },
+        incrementDate,
+      ),
+    ).toEqual({
+      playing: true,
+      cash: 346,
+      prices: PRICES_DATA,
+      date: date + 1,
+      holdings: { '2': 45 },
+    });
+  });
+
   it('should store the prices in the store on successful fetch', () => {
     const action = fetchPriceDataSuccess({ prices: PRICES_DATA });
     const initialState = getInitialState();
@@ -93,7 +116,7 @@ describe('Reducers', () => {
         cash: 10000,
         playing: true,
         prices: PRICES_DATA,
-        date: new Date(),
+        date: 6,
         holdings: { '1': 45 },
       };
     });
@@ -133,7 +156,7 @@ describe('Reducers', () => {
         cash: 10000,
         playing: true,
         prices: PRICES_DATA,
-        date: new Date(),
+        date: 3,
         holdings: { '1': 45 },
       };
     });
@@ -173,7 +196,7 @@ describe('Reducers', () => {
         cash: 10000,
         playing: true,
         prices: PRICES_DATA,
-        date: new Date(),
+        date: 3,
         holdings: { '1': 45 },
       };
     });

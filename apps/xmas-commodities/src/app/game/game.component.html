@@ -1,6 +1,9 @@
+<h3 class="date">{{ date$ | async | periodDate | date : 'medium' }}</h3>
 <div class="layout-grid">
   <h2 class="total-center grey-bg gap-r">Current holdings</h2>
-  <h2 class="total-center grey-bg">Available commodities</h2>
+  <h2 class="total-center grey-bg">
+    Available commodities
+  </h2>
   <div>
     <xmas-commodities-holdings></xmas-commodities-holdings>
   </div>

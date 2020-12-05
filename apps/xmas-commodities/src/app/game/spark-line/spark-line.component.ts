@@ -14,7 +14,7 @@ export class SparkLineComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.size && this.prices) {
-      this.setData(this.prices.slice(0, this.size));
+      this.setData(this.prices.slice(-1 * this.size));
     }
   }
 

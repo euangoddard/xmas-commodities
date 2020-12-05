@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { of, timer } from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 import {
   fetchPriceData,
   fetchPriceDataError,
   fetchPriceDataSuccess,
+  incrementDate,
+  stopGame,
 } from './actions';
 import { ApiService } from './api.service';
+import { MAX_DATE } from './game/game.constants';
+import { AppState } from './reducers';
+import { selectDate, selectIsPlaying } from './selectors';
 
 @Injectable()
 export class GameEffects {
@@ -25,8 +37,31 @@ export class GameEffects {
     ),
   );
 
+  readonly incrementDate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchPriceDataSuccess),
+      switchMap(() => timer(0, 1000)),
+      withLatestFrom(
+        this.store.pipe(select(selectIsPlaying)),
+        this.store.pipe(select(selectDate)),
+      ),
+      map(([time, isPlaying, date]) => {
+        return { isPlaying, date };
+      }),
+      filter(({ isPlaying }) => isPlaying),
+      map(({ date }) => {
+        if ((date || 0) < MAX_DATE) {
+          return incrementDate();
+        } else {
+          return stopGame();
+        }
+      }),
+    ),
+  );
+
   constructor(
     private readonly actions$: Actions,
     private readonly api: ApiService,
+    private readonly store: Store<AppState>,
   ) {}
 }

@@ -41,6 +41,7 @@
     "@ngrx/effects": "^10.0.1",
     "@ngrx/store": "^10.0.1",
     "@nrwl/angular": "10.3.1",
+    "date-fns": "^2.16.1",
     "rxjs": "~6.5.5",
     "zone.js": "^0.10.2"
   },

@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -17,6 +18,7 @@ import { AppState, reducer } from './reducers';
     RouterModule.forRoot(ROUTES, { relativeLinkResolution: 'legacy' }),
     StoreModule.forRoot<AppState>({ game: reducer }, {}),
     EffectsModule.forRoot([GameEffects]),
+    HttpClientModule,
   ],
   bootstrap: [AppComponent],
 })

@@ -5,7 +5,7 @@ function nextInt() {
   return ++int;
 }
 
-const PRICE_POINTS = 30 + 15 * 8 * 25;
+const PRICE_POINTS = 100 + (4 * 8 + 1) * 25;
 
 const COMMODITIES = [
   {

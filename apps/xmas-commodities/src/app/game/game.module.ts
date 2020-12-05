@@ -6,6 +6,7 @@ import { ChangeComponent } from './change/change.component';
 import { CommodityComponent } from './commodity/commodity.component';
 import { GameComponent } from './game.component';
 import { HoldingsComponent } from './holdings/holdings.component';
+import { PeriodDatePipe } from './period-date.pipe';
 import { SparkLineComponent } from './spark-line/spark-line.component';
 import { TradeComponent } from './trade/trade.component';
 
@@ -22,6 +23,7 @@ import { TradeComponent } from './trade/trade.component';
     HoldingsComponent,
     ChangeComponent,
     TradeComponent,
+    PeriodDatePipe,
   ],
 })
 export class GameModule {}
