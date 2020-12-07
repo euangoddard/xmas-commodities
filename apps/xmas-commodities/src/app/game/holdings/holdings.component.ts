@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 import { sellOutPosition } from '../../actions';
 import { AppState } from '../../reducers';
-import { selectCash, selectHoldings } from '../../selectors';
+import { selectActiveHoldings, selectCash } from '../../selectors';
 import { Commodity } from '../game.models';
 
 @Component({
@@ -11,8 +12,9 @@ import { Commodity } from '../game.models';
   styleUrls: ['./holdings.component.scss'],
 })
 export class HoldingsComponent {
-  readonly holdings$ = this.store.pipe(select(selectHoldings));
-  readonly cash$ = this.store.pipe(select(selectCash))
+  readonly holdings$ = this.store.pipe(select(selectActiveHoldings));
+  readonly cash$ = this.store.pipe(select(selectCash));
+  readonly hasNoHoldings$ = this.holdings$.pipe(map((h) => !h.length));
 
   constructor(private readonly store: Store<AppState>) {}
 

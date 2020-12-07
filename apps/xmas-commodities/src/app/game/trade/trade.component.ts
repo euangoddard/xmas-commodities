@@ -10,7 +10,7 @@ import { select, Store } from '@ngrx/store';
 import { map, take } from 'rxjs/operators';
 import { buyCommodity, sellCommodity } from '../../actions';
 import { AppState, COMMISSION } from '../../reducers';
-import { selectCash, selectHoldings } from '../../selectors';
+import { selectCash, selectActiveHoldings } from '../../selectors';
 import { Commodity } from '../game.models';
 
 @Component({
@@ -91,7 +91,7 @@ export class TradeComponent {
     return (control: AbstractControl) => {
       return this.store
         .pipe(
-          select(selectHoldings),
+          select(selectActiveHoldings),
           map(
             (holdings) =>
               holdings.find(

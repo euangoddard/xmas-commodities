@@ -20,3 +20,5 @@
   <div class="metric"><small>Shares</small>{{ holding.holding | number }}</div>
   <div class="metric"><small>Value</small>{{ holding.value | currency }}</div>
 </article>
+
+<p class="no-holdings" *ngIf="hasNoHoldings$ | async">You don't have any holdings - go buy some commodities!</p>

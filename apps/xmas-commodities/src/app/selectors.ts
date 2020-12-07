@@ -41,16 +41,18 @@ export const selectIsPlaying = createSelector(
   (state: GameState) => state.playing,
 );
 
-export const selectHoldings = createSelector(selectGameState, (state) => {
+export const selectActiveHoldings = createSelector(selectGameState, (state) => {
   const commoditiesAndPrices = state.prices;
   const holdings = state.holdings;
   const priceIndex = HISTORIC_VALUES + (state.date || 0);
-  return (commoditiesAndPrices || []).map(({ commodity, prices }) => {
-    const holding = holdings[commodity.id] || 0;
-    return {
-      commodity,
-      holding,
-      value: holding * (prices[priceIndex] || 0),
-    };
-  });
+  return (commoditiesAndPrices || [])
+    .map(({ commodity, prices }) => {
+      const holding = holdings[commodity.id] || 0;
+      return {
+        commodity,
+        holding,
+        value: holding * (prices[priceIndex] || 0),
+      };
+    })
+    .filter(({ holding }) => !!holding);
 });
