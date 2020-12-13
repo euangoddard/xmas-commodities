@@ -8,8 +8,9 @@ import {
   startGame,
   stopGame,
 } from './actions';
+import { COMMISSION } from './game/game.constants';
 import { PriceData } from './game/game.models';
-import { COMMISSION, GameState, reducer } from './reducers';
+import { GameState, reducer } from './reducers';
 
 const PRICES_DATA: readonly PriceData[] = [
   {

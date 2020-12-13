@@ -9,8 +9,9 @@ import {
 import { select, Store } from '@ngrx/store';
 import { map, take } from 'rxjs/operators';
 import { buyCommodity, sellCommodity } from '../../actions';
-import { AppState, COMMISSION } from '../../reducers';
+import { AppState } from '../../reducers';
 import { selectCash, selectActiveHoldings } from '../../selectors';
+import { COMMISSION } from '../game.constants';
 import { Commodity } from '../game.models';
 
 @Component({

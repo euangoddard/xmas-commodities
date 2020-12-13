@@ -1,0 +1,40 @@
+@use "../../styles/material-color" as mc;
+
+article {
+  max-width: 780px;
+}
+
+ul {
+  margin-left: 1rem;
+  padding: 0 2rem;
+}
+
+p,
+li {
+  line-height: 1.4;
+  margin: 0 0 1rem;
+}
+
+.positive {
+  color: mc.material-color(green, A700);
+}
+
+.negative {
+  color: mc.material-color(red, A700);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid mc.material-color(grey, 500);
+  height: 1px;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+a.button {
+  text-decoration: none;
+}

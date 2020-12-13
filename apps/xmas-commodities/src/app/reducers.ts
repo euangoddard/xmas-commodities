@@ -8,12 +8,12 @@ import {
   startGame,
   stopGame,
 } from './actions';
+import { COMMISSION } from './game/game.constants';
 import { PricesData } from './game/game.models';
 import { getCurrentPrice, getHoldingOrDefault } from './game/game.utils';
 import { Mapping } from './types';
 
 const INITIAL_CASH_BALANCE = 10000;
-export const COMMISSION = 10;
 
 export interface Holding {
   number: number;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { fetchPriceData, startGame } from '../actions';
 import { AppState } from '../reducers';
@@ -9,6 +9,7 @@ import { Commodity } from './game.models';
   selector: 'xmas-commodities-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameComponent implements OnInit {
   readonly commodities$ = this.store.pipe(select(selectCommodities));

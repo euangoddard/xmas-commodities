@@ -1,2 +1,45 @@
-<p>home works!</p>
-<a routerLink="/play">Play!</a>
+<article>
+  <h2>Merry Christmas!</h2>
+  <h3>Welcome to the Christmas commodity trader</h3>
+  <p>
+    The aim of this game is to trade commodities on the Christmas commodities
+    exchange to make as much money from 1st December until Christmas Day (25th).
+  </p>
+  <p>
+    You start with a pot of <span class="positive">$10,000</span> and each trade
+    (both buy and sell) will cost
+    <span class="negative">{{ commission | currency }}</span> in commission.
+  </p>
+  <p>
+    The commodity exchange is open from 8am till 4pm every day of December
+    (until Christmas day) and you will receive prices every 15 minutes. However,
+    in the game, every second will bring the next price to you, so you'll need
+    to act quickly!
+  </p>
+  <p>
+    You will see your current holdings first (initially empty) followed by the 8
+    available commodities that you can trade. Each commodity will display the
+    most recent {{ historic_points }} prices to give you an idea of past
+    performance.
+  </p>
+  <p>
+    Come Christmas day, any commodities you hold will be sold at their current
+    price (minus commission) and you'll see how you've done!
+  </p>
+  <p class="text-center">
+    <a routerLink="/play" class="button buy">Start trading!</a>
+  </p>
+
+  <hr />
+  <h3>Additional notes</h3>
+  <ul>
+    <li>
+      All prices are generated every time the game loads, so no two games will
+      play out the same.
+    </li>
+    <li>
+      Prices are based off end-of-day prices for real stocks, but are adjusted
+      slightly at random to give a realistic simulation of a stock market.
+    </li>
+  </ul>
+</article>

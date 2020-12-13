@@ -11,3 +11,5 @@ export const INTERVALS_PER_DAY =
 export const MAX_DATE = INTERVALS_PER_DAY * 25;
 
 export const HISTORIC_VALUES = 100;
+
+export const COMMISSION = 10;

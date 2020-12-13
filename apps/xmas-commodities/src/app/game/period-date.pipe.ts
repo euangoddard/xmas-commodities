@@ -1,6 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { addMinutes } from 'date-fns';
-import { INTERVAL_MINS, INTERVALS_PER_DAY, MARKET_OPEN } from './game.constants';
+import {
+  INTERVAL_MINS,
+  INTERVALS_PER_DAY,
+  MARKET_OPEN,
+} from './game.constants';
 
 @Pipe({
   name: 'periodDate',

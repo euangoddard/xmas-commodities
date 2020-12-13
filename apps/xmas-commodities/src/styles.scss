@@ -45,8 +45,15 @@ h1 {
   padding: 0.5rem 1rem;
   width: 4rem;
 
+  transition: opacity 0.2s ease-in-out;
+
   &:disabled {
     opacity: 0.5;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
   }
 
   &.buy {
