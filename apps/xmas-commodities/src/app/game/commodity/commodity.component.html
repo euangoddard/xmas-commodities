@@ -7,7 +7,7 @@
     [size]="100"
   ></xmas-commodities-spark-line>
   <p class="prices">
-    {{ lastPrice$ | async | currency }}
+    {{ currentPrice$ | async | currency }}
     <xmas-commodities-change
       [change]="change$ | async"
     ></xmas-commodities-change>
@@ -15,6 +15,6 @@
 </section>
 
 <xmas-commodities-trade
-  [price]="lastPrice$ | async"
+  [price]="currentPrice$ | async"
   [commodity]="commodity"
 ></xmas-commodities-trade>

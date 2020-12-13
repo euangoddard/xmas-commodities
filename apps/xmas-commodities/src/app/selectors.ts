@@ -1,5 +1,10 @@
 import { createSelector } from '@ngrx/store';
 import { HISTORIC_VALUES } from './game/game.constants';
+import {
+  getCurrentPrice,
+  getHoldingOrDefault,
+  getPreviousPrice,
+} from './game/game.utils';
 import { AppState, GameState } from './reducers';
 
 const selectGameState = (state: AppState) => state.game;
@@ -18,16 +23,36 @@ export const selectDate = createSelector(
   (state: GameState) => state.date,
 );
 
-export const selectCommodityPrices = createSelector(
+export const selectCommodityPriceHistory = createSelector(
   selectGameState,
   (state: GameState, props: { id: number }): readonly number[] => {
     const commodity = state.prices?.find(
       ({ commodity }) => commodity.id === props.id,
     );
+    const startIndex = state.date || 0;
     return (commodity?.prices || []).slice(
-      0,
-      HISTORIC_VALUES + (state.date || 0),
+      startIndex,
+      HISTORIC_VALUES + startIndex,
     );
+  },
+);
+
+export const selectCommodityPriceAndChange = createSelector(
+  selectGameState,
+  (
+    state: GameState,
+    props: { id: number },
+  ): { current: number; change: number } => {
+    const commodity = state.prices?.find(
+      ({ commodity }) => commodity.id === props.id,
+    );
+    const prices = commodity?.prices ?? [];
+    const currentPrice = getCurrentPrice(prices, state.date);
+    const previousPrice = getPreviousPrice(prices, state.date);
+    return {
+      current: currentPrice,
+      change: currentPrice - previousPrice,
+    };
   },
 );
 
@@ -43,16 +68,17 @@ export const selectIsPlaying = createSelector(
 
 export const selectActiveHoldings = createSelector(selectGameState, (state) => {
   const commoditiesAndPrices = state.prices;
-  const holdings = state.holdings;
-  const priceIndex = HISTORIC_VALUES + (state.date || 0);
   return (commoditiesAndPrices || [])
     .map(({ commodity, prices }) => {
-      const holding = holdings[commodity.id] || 0;
+      const holding = getHoldingOrDefault(state, commodity.id);
+      const currentPrice = getCurrentPrice(prices, state.date);
+      const valuation = holding.number * currentPrice;
       return {
         commodity,
         holding,
-        value: holding * (prices[priceIndex] || 0),
+        valuation,
+        gain: valuation - holding.number * holding.avgCost,
       };
     })
-    .filter(({ holding }) => !!holding);
+    .filter(({ holding }) => !!holding.number);
 });

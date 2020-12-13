@@ -1,8 +1,18 @@
 @use "../../styles/material-color" as mc;
 
+@mixin large-screen {
+  @media (screen and min-width: 480px) {
+    @content;
+  }
+}
+
 .layout-grid {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: block;
+
+  @include large-screen {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
 }
 
 .grey-bg {
@@ -12,11 +22,25 @@
 }
 
 .gap-r {
-  margin-right: 1rem;
+  @include large-screen {
+    margin-right: 1rem;
+  }
 }
 
 .total-center {
   text-align: center;
+}
+
+.holdings {
+  margin-bottom: 1rem;
+
+  @include large-screen {
+    margin-bottom: 0;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
 }
 
 .commodities-grid {

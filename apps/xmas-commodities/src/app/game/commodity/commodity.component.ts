@@ -1,9 +1,12 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { ReplaySubject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { pluck, switchMap } from 'rxjs/operators';
 import { AppState } from '../../reducers';
-import { selectCommodityPrices } from '../../selectors';
+import {
+  selectCommodityPriceAndChange,
+  selectCommodityPriceHistory,
+} from '../../selectors';
 import { Commodity } from '../game.models';
 
 @Component({
@@ -20,17 +23,19 @@ export class CommodityComponent implements OnChanges {
   private readonly commoditySubject = new ReplaySubject<Commodity>(1);
   readonly prices$ = this.commoditySubject.pipe(
     switchMap(({ id }) => {
-      return this.store.pipe(select(selectCommodityPrices, { id }));
+      return this.store.pipe(select(selectCommodityPriceHistory, { id }));
     }),
   );
-  readonly lastPrice$ = this.prices$.pipe(map((prices) => prices.slice(-1)[0]));
 
-  readonly change$ = this.prices$.pipe(
-    map((prices) => {
-      const [last, current] = prices.slice(-2);
-      return current - last;
+  private readonly priceAndChange$ = this.commoditySubject.pipe(
+    switchMap(({ id }) => {
+      return this.store.pipe(select(selectCommodityPriceAndChange, { id }));
     }),
   );
+
+  readonly currentPrice$ = this.priceAndChange$.pipe(pluck('current'));
+
+  readonly change$ = this.priceAndChange$.pipe(pluck('change'));
 
   constructor(private readonly store: Store<AppState>) {}
 

@@ -3,7 +3,6 @@
 :host {
   display: block;
   text-align: center;
-  margin-right: 1rem;
   background-color: mc.material-color(blue-grey, 800);
   padding: 1rem;
 }
@@ -24,7 +23,7 @@ p {
 .holding {
   margin-bottom: 1rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1px;
 
   > * {
@@ -32,12 +31,16 @@ p {
     padding: 1rem;
   }
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   h3 {
     margin: 0;
     display: flex;
     align-items: center;
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 4;
 
     &::before {
       display: inline-block;

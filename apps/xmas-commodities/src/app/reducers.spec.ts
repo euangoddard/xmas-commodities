@@ -1,23 +1,24 @@
 import { INIT } from '@ngrx/store';
 import {
   buyCommodity,
-  fetchPriceDataSuccess, incrementDate,
+  fetchPriceDataSuccess,
+  incrementDate,
   sellCommodity,
   sellOutPosition,
   startGame,
-  stopGame
+  stopGame,
 } from './actions';
 import { PriceData } from './game/game.models';
-import { GameState, reducer } from './reducers';
+import { COMMISSION, GameState, reducer } from './reducers';
 
 const PRICES_DATA: readonly PriceData[] = [
   {
     commodity: { id: 1, name: 'Commodity 1', colour: 'white' },
-    prices: [100, 102, 145],
+    prices: range(100, 200),
   },
   {
     commodity: { id: 2, name: 'Commodity 2', colour: 'black' },
-    prices: [200, 210, 190],
+    prices: range(500, 200),
   },
 ];
 
@@ -40,7 +41,7 @@ describe('Reducers', () => {
           cash: 0,
           prices: PRICES_DATA,
           date: 64,
-          holdings: { '1': 2 },
+          holdings: { '1': { number: 2, avgCost: 1 } },
         },
         startGame,
       ),
@@ -63,7 +64,7 @@ describe('Reducers', () => {
           playing: true,
           prices: PRICES_DATA,
           date,
-          holdings: { '2': 45 },
+          holdings: { '2': { number: 45, avgCost: 2 } },
         },
         stopGame,
       ),
@@ -72,7 +73,7 @@ describe('Reducers', () => {
       cash: 346,
       prices: PRICES_DATA,
       date,
-      holdings: { '2': 45 },
+      holdings: { '2': { number: 45, avgCost: 2 } },
     });
   });
 
@@ -86,7 +87,7 @@ describe('Reducers', () => {
           playing: true,
           prices: PRICES_DATA,
           date,
-          holdings: { '2': 45 },
+          holdings: { '2': { number: 45, avgCost: 2 } },
         },
         incrementDate,
       ),
@@ -95,7 +96,7 @@ describe('Reducers', () => {
       cash: 346,
       prices: PRICES_DATA,
       date: date + 1,
-      holdings: { '2': 45 },
+      holdings: { '2': { number: 45, avgCost: 2 } },
     });
   });
 
@@ -117,7 +118,7 @@ describe('Reducers', () => {
         playing: true,
         prices: PRICES_DATA,
         date: 6,
-        holdings: { '1': 45 },
+        holdings: { '1': { number: 45, avgCost: 50 } },
       };
     });
 
@@ -129,21 +130,25 @@ describe('Reducers', () => {
         ),
       ).toEqual({
         ...initialState,
-        holdings: { ...initialState.holdings, '2': 10 },
+        holdings: {
+          ...initialState.holdings,
+          '2': { number: 10, avgCost: 100 },
+        },
         cash: 8990,
       });
     });
 
     it('should increment a current holding and update the cash balance taking into account commission', () => {
+      const newAvgCost = (45 * 50 + 10 * 60) / (45 + 10);
       expect(
         reducer(
           initialState,
-          buyCommodity({ commodityId: 1, number: 10, unitPrice: 50 }),
+          buyCommodity({ commodityId: 1, number: 10, unitPrice: 60 }),
         ),
       ).toEqual({
         ...initialState,
-        holdings: { '1': 55 },
-        cash: 9490,
+        holdings: { '1': { number: 55, avgCost: newAvgCost } },
+        cash: 10000 - 60 * 10 - COMMISSION,
       });
     });
   });
@@ -157,7 +162,7 @@ describe('Reducers', () => {
         playing: true,
         prices: PRICES_DATA,
         date: 3,
-        holdings: { '1': 45 },
+        holdings: { '1': { number: 45, avgCost: 1.56 } },
       };
     });
 
@@ -169,7 +174,7 @@ describe('Reducers', () => {
         ),
       ).toEqual({
         ...initialState,
-        holdings: { ...initialState.holdings, '1': 0 },
+        holdings: {},
         cash: 14490,
       });
     });
@@ -182,7 +187,7 @@ describe('Reducers', () => {
         ),
       ).toEqual({
         ...initialState,
-        holdings: { '1': 35 },
+        holdings: { '1': { number: 35, avgCost: 1.56 } },
         cash: 10490,
       });
     });
@@ -197,7 +202,7 @@ describe('Reducers', () => {
         playing: true,
         prices: PRICES_DATA,
         date: 3,
-        holdings: { '1': 45 },
+        holdings: { '1': { number: 45, avgCost: 4.56 } },
       };
     });
 
@@ -208,12 +213,13 @@ describe('Reducers', () => {
     });
 
     it('should close out the position and update the cash balance', () => {
+      const salePrice = 100 + 100 + 3;
       expect(
         reducer(initialState, sellOutPosition({ commodityId: 1 })),
       ).toEqual({
         ...initialState,
-        holdings: { '1': 0 },
-        cash: 16515,
+        holdings: {},
+        cash: 10000 + salePrice * 45 - COMMISSION,
       });
     });
   });
@@ -221,4 +227,8 @@ describe('Reducers', () => {
 
 function getInitialState(): GameState {
   return reducer(undefined, { type: INIT });
+}
+
+function range(start: number, count: number): readonly number[] {
+  return Array.from(new Array(count), (_, index) => start + index);
 }
