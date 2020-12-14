@@ -1,5 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { buyCommodity, fetchPriceDataSuccess, incrementDate, sellCommodity, sellOutPosition, startGame, stopGame } from './actions';
+import {
+  buyCommodity,
+  fetchPriceDataSuccess,
+  incrementDate,
+  sellCommodity,
+  sellOutPosition,
+  startGame,
+  stopGame,
+} from './actions';
 import { COMMISSION, INITIAL_CASH_BALANCE } from './game/game.constants';
 import { PricesData } from './game/game.models';
 import { getCurrentPrice, getHoldingOrDefault } from './game/game.utils';
@@ -38,7 +46,7 @@ const gameReducer = createReducer(
       playing: true,
       cash: INITIAL_CASH_BALANCE,
       prices: null,
-      date: 0,//786,
+      date: 0,
       holdings: {},
     };
   }),
