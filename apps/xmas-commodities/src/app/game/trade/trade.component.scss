@@ -1,15 +1,23 @@
 @use "../../../styles/material-color" as mc;
+@use "../../../styles/screen-size" as ss;
 
 :host {
   padding: 0.5rem 0 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(auto, auto));
+
+  --cols: 2;
+
+  @include ss.large-screen {
+    --cols: 4;
+  }
+
+  grid-template-columns: repeat(var(--cols), minmax(auto, auto));
   align-items: center;
 }
 
 hr {
   grid-column-start: 1;
-  grid-column-end: 5;
+  grid-column-end: calc(var(--cols) + 1);
   border: none;
   border-top: 1px solid mc.material-color(blue-grey, 900);
   height: 1px;

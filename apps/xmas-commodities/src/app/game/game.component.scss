@@ -1,15 +1,10 @@
 @use "../../styles/material-color" as mc;
-
-@mixin large-screen {
-  @media (screen and min-width: 480px) {
-    @content;
-  }
-}
+@use "../../styles/screen-size" as ss;
 
 .layout-grid {
   display: block;
 
-  @include large-screen {
+  @include ss.large-screen {
     display: grid;
     grid-template-columns: 1fr 3fr;
   }
@@ -22,7 +17,7 @@
 }
 
 .gap-r {
-  @include large-screen {
+  @include ss.large-screen {
     margin-right: 1rem;
   }
 }
@@ -34,7 +29,7 @@
 .holdings {
   margin-bottom: 1rem;
 
-  @include large-screen {
+  @include ss.large-screen {
     margin-bottom: 0;
     grid-column-start: 1;
     grid-column-end: 2;
@@ -45,7 +40,7 @@
 
 .commodities-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(296px, 1fr));
   justify-items: auto;
   gap: 1rem;
   background-color: mc.material-color(blue-grey, 800);

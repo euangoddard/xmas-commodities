@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ChangeComponent } from './change/change.component';
 import { CommodityComponent } from './commodity/commodity.component';
+import { EndComponent } from './end/end.component';
 import { GameComponent } from './game.component';
 import { HoldingsComponent } from './holdings/holdings.component';
 import { PeriodDatePipe } from './period-date.pipe';
@@ -14,7 +15,10 @@ import { TradeComponent } from './trade/trade.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild([{ path: '', component: GameComponent }]),
+    RouterModule.forChild([
+      { path: '', component: GameComponent },
+      { path: 'end', component: EndComponent },
+    ]),
   ],
   declarations: [
     GameComponent,
@@ -24,6 +28,7 @@ import { TradeComponent } from './trade/trade.component';
     ChangeComponent,
     TradeComponent,
     PeriodDatePipe,
+    EndComponent,
   ],
 })
 export class GameModule {}

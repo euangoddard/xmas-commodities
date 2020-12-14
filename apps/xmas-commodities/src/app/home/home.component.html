@@ -1,4 +1,4 @@
-<article>
+<article class="article">
   <h2>Merry Christmas!</h2>
   <h3>Welcome to the Christmas commodity trader</h3>
   <p>
@@ -6,9 +6,10 @@
     exchange to make as much money from 1st December until Christmas Day (25th).
   </p>
   <p>
-    You start with a pot of <span class="positive">$10,000</span> and each trade
+    You start with a pot of
+    <span class="positive-text">{{ initialCash | currency }}</span> and each trade
     (both buy and sell) will cost
-    <span class="negative">{{ commission | currency }}</span> in commission.
+    <span class="negative-text">{{ commission | currency }}</span> in commission.
   </p>
   <p>
     The commodity exchange is open from 8am till 4pm every day of December
@@ -19,7 +20,7 @@
   <p>
     You will see your current holdings first (initially empty) followed by the 8
     available commodities that you can trade. Each commodity will display the
-    most recent {{ historic_points }} prices to give you an idea of past
+    most recent {{ historicPoints }} prices to give you an idea of past
     performance.
   </p>
   <p>

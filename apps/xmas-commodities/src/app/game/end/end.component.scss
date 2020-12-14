@@ -1,0 +1,12 @@
+.buttons {
+  .button {
+    display: inline-block;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    width: auto;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

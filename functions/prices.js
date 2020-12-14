@@ -75,7 +75,7 @@ function buildPrices(pricesSets) {
     const originalDelta = basePrices[index] - basePrices[index - 1];
     const delta = getRandomArbitrary(0.9, 1.1) * originalDelta;
     const nextPrice = prices[index - 1] + delta;
-    prices.push(roundTo2Dp(nextPrice));
+    prices.push(Math.max(roundTo2Dp(nextPrice), 0.01));
   }
   return prices;
 }

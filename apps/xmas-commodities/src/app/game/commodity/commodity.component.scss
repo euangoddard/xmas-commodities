@@ -1,11 +1,17 @@
 @use "../../../styles/material-color" as mc;
+@use "../../../styles/screen-size" as ss;
 
 :host {
   background: mc.material-color(blue-grey, 700);
 }
 
 .data {
-  display: grid;
+  display: block;
+
+  @include ss.large-screen {
+    display: grid;
+  }
+
   padding: 1rem;
   grid-template-columns: 2fr 1fr;
 }

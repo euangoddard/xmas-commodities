@@ -8,7 +8,7 @@ import {
   startGame,
   stopGame,
 } from './actions';
-import { COMMISSION } from './game/game.constants';
+import { COMMISSION, HISTORIC_VALUES } from './game/game.constants';
 import { PriceData } from './game/game.models';
 import { GameState, reducer } from './reducers';
 
@@ -57,6 +57,8 @@ describe('Reducers', () => {
 
   it('should support the stop game action', () => {
     const date = 45;
+    const holding1Value = (100 + HISTORIC_VALUES + date) * 50 - COMMISSION;
+    const holding2Value = (500 + HISTORIC_VALUES + date) * 100 - COMMISSION;
     expect(
       reducer(
         {
@@ -65,16 +67,19 @@ describe('Reducers', () => {
           playing: true,
           prices: PRICES_DATA,
           date,
-          holdings: { '2': { number: 45, avgCost: 2 } },
+          holdings: {
+            '1': { number: 50, avgCost: 100 },
+            '2': { number: 100, avgCost: 200 },
+          },
         },
         stopGame,
       ),
     ).toEqual({
       playing: false,
-      cash: 346,
+      cash: 346 + holding1Value + holding2Value,
       prices: PRICES_DATA,
       date,
-      holdings: { '2': { number: 45, avgCost: 2 } },
+      holdings: {},
     });
   });
 

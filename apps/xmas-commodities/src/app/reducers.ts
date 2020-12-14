@@ -1,19 +1,9 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import {
-  buyCommodity,
-  fetchPriceDataSuccess,
-  incrementDate,
-  sellCommodity,
-  sellOutPosition,
-  startGame,
-  stopGame,
-} from './actions';
-import { COMMISSION } from './game/game.constants';
+import { buyCommodity, fetchPriceDataSuccess, incrementDate, sellCommodity, sellOutPosition, startGame, stopGame } from './actions';
+import { COMMISSION, INITIAL_CASH_BALANCE } from './game/game.constants';
 import { PricesData } from './game/game.models';
 import { getCurrentPrice, getHoldingOrDefault } from './game/game.utils';
 import { Mapping } from './types';
-
-const INITIAL_CASH_BALANCE = 10000;
 
 export interface Holding {
   number: number;
@@ -48,12 +38,29 @@ const gameReducer = createReducer(
       playing: true,
       cash: INITIAL_CASH_BALANCE,
       prices: null,
-      date: 0,
+      date: 0,//786,
       holdings: {},
     };
   }),
   on(stopGame, (state) => {
-    return { ...state, playing: false };
+    // Sell everything
+    const holdings = state.holdings;
+    let cashIncrement = 0;
+    for (const { commodity, prices } of state.prices ?? []) {
+      const currentHolding = holdings[commodity.id]?.number || 0;
+      if (currentHolding === 0) {
+        continue;
+      }
+      const currentPrice = getCurrentPrice(prices, state.date);
+      cashIncrement += currentHolding * currentPrice - COMMISSION;
+    }
+
+    return {
+      ...state,
+      playing: false,
+      cash: state.cash + cashIncrement,
+      holdings: {},
+    };
   }),
   on(incrementDate, (state) => {
     return { ...state, date: (state.date || 0) + 1 };

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { of, timer } from 'rxjs';
@@ -7,6 +8,7 @@ import {
   filter,
   map,
   switchMap,
+  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import {
@@ -50,7 +52,7 @@ export class GameEffects {
       }),
       filter(({ isPlaying }) => isPlaying),
       map(({ date }) => {
-        if ((date || 0) < MAX_DATE) {
+        if ((date || 0) < (MAX_DATE - 1)) {
           return incrementDate();
         } else {
           return stopGame();
@@ -59,9 +61,21 @@ export class GameEffects {
     ),
   );
 
+  readonly moveToEndGame$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(stopGame),
+        tap(() => {
+          this.router.navigate(['play', 'end']);
+        }),
+      ),
+    { dispatch: false },
+  );
+
   constructor(
     private readonly actions$: Actions,
     private readonly api: ApiService,
     private readonly store: Store<AppState>,
+    private readonly router: Router,
   ) {}
 }

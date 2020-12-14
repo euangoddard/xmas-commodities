@@ -64,3 +64,42 @@ h1 {
     background: mc.material-color(red, A700);
   }
 }
+
+.positive-text {
+  color: mc.material-color(green, A700);
+}
+
+.negative-text {
+  color: mc.material-color(red, A700);
+}
+
+.text-center {
+  text-align: center;
+}
+
+a.button {
+  text-decoration: none;
+}
+
+.article {
+  max-width: 780px;
+
+  ul {
+    margin-left: 1rem;
+    padding: 0 2rem;
+  }
+
+  p,
+  li {
+    line-height: 1.4;
+    margin: 0 0 1rem;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid mc.material-color(grey, 500);
+    height: 1px;
+    width: 100%;
+    margin: 1.5rem 0;
+  }
+}

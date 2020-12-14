@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { COMMISSION, HISTORIC_VALUES } from '../game/game.constants';
+import {
+  COMMISSION,
+  HISTORIC_VALUES,
+  INITIAL_CASH_BALANCE,
+} from '../game/game.constants';
 
 @Component({
   selector: 'xmas-commodities-home',
@@ -8,6 +12,7 @@ import { COMMISSION, HISTORIC_VALUES } from '../game/game.constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
+  readonly initialCash = INITIAL_CASH_BALANCE;
   readonly commission = COMMISSION;
-  readonly historic_points = HISTORIC_VALUES;
+  readonly historicPoints = HISTORIC_VALUES;
 }
