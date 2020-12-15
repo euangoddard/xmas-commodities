@@ -11,3 +11,8 @@ port = 4300
 publish = "dist"
 autoLaunch = true
 framework = "#custom"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
