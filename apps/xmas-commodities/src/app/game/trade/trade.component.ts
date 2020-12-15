@@ -10,7 +10,7 @@ import { select, Store } from '@ngrx/store';
 import { map, take } from 'rxjs/operators';
 import { buyCommodity, sellCommodity } from '../../actions';
 import { AppState } from '../../reducers';
-import { selectCash, selectActiveHoldings } from '../../selectors';
+import { selectActiveHoldings, selectCash } from '../../selectors';
 import { COMMISSION } from '../game.constants';
 import { Commodity } from '../game.models';
 
@@ -99,10 +99,13 @@ export class TradeComponent {
                 ({ commodity }) => commodity.id === this.commodity.id,
               )!,
           ),
-          map(({ holding }) => {
+          map((value) => value?.holding ?? { number: 0, avgCost: 0 }),
+          map((holding) => {
             const count = control.value;
             if (count) {
-              return count <= holding ? null : { insufficientShares: true };
+              return count <= holding.number
+                ? null
+                : { insufficientShares: true };
             } else {
               return null;
             }
