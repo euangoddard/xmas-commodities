@@ -25,7 +25,11 @@ hr {
 }
 
 span {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
+
+  &:nth-of-type(4n+1) {
+    padding-left: 1rem;
+  }
 }
 
 .input {
