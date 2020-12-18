@@ -9,37 +9,66 @@
     step="1"
     min="1"
 /></span>
+
 <span>@ {{ price | currency }}</span>
-<span
-  ><button
+
+<span class="marker-container">
+  <button
     [disabled]="controls.buy.invalid"
     class="buy button"
     type="button"
     (click)="buy()"
+    cdkOverlayOrigin
+    #buyTrigger="cdkOverlayOrigin"
   >
     Buy
-  </button></span
->
+  </button>
+</span>
 
 <hr />
 
 <span>Sell</span>
-<span
-  ><input
+<span>
+  <input
     type="number"
     [formControl]="controls.sell"
     class="sell input"
     step="1"
     min="1"
-/></span>
+  />
+</span>
+
 <span>@ {{ price | currency }}</span>
-<span
-  ><button
+
+<span>
+  <button
     [disabled]="controls.sell.invalid"
     class="sell button"
     type="button"
     (click)="sell()"
+    cdkOverlayOrigin
+    #sellTrigger="cdkOverlayOrigin"
   >
     Sell
-  </button></span
+  </button>
+</span>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="sellTrigger"
+  [cdkConnectedOverlayOpen]="sellTotal$ | async"
+  [cdkConnectedOverlayPositions]="positions"
 >
+  <aside class="trade-total">({{ sellTotal$ | async | currency }})</aside>
+</ng-template>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="buyTrigger"
+  [cdkConnectedOverlayOpen]="buyTotal$ | async"
+  [cdkConnectedOverlayPositions]="positions"
+>
+  <aside class="trade-total">
+    {{ buyTotal$ | async | currency }}
+  </aside>
+</ng-template>

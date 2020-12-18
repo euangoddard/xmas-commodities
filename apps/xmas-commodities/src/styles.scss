@@ -1,4 +1,5 @@
 @use "styles/material-color" as mc;
+@import '~@angular/cdk/overlay-prebuilt.css';
 
 $sans-serif-font-stack: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
   Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
@@ -44,6 +45,7 @@ h1 {
   text-transform: uppercase;
   padding: 0.5rem 1rem;
   width: 4rem;
+  text-align: center;
 
   transition: opacity 0.2s ease-in-out;
 
@@ -120,4 +122,28 @@ a.button {
 .loading {
   text-align: center;
   margin-bottom: 80vh;
+}
+
+.trade-total {
+  $bg-color: mc.material-color(blue-grey, 900);
+
+  $height: 32px;
+  height: $height;
+  position: relative;
+  line-height: $height;
+  font-size: 0.875rem;
+  background: $bg-color;
+  padding: 0 0.5rem;
+
+  &::before {
+    position: absolute;
+    bottom: -6px;
+    right: 12px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 6px 0 6px;
+    border-color: $bg-color transparent transparent transparent;
+  }
 }

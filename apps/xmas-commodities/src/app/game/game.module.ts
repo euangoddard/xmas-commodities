@@ -1,3 +1,4 @@
+import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +20,7 @@ import { TradeComponent } from './trade/trade.component';
       { path: '', component: GameComponent },
       { path: 'end', component: EndComponent },
     ]),
+    OverlayModule,
   ],
   declarations: [
     GameComponent,

@@ -52,7 +52,7 @@ export class GameEffects {
       }),
       filter(({ isPlaying }) => isPlaying),
       map(({ date }) => {
-        if ((date || 0) < (MAX_DATE - 1)) {
+        if ((date || 0) < MAX_DATE - 1) {
           return incrementDate();
         } else {
           return stopGame();

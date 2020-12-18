@@ -1,4 +1,15 @@
-import { Component, Input } from '@angular/core';
+import {
+  ConnectedPosition,
+  OverlayConnectionPosition,
+} from '@angular/cdk/overlay';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -7,7 +18,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { map, take } from 'rxjs/operators';
+import { combineLatest, Observable, ReplaySubject } from 'rxjs';
+import { map, shareReplay, take } from 'rxjs/operators';
 import { buyCommodity, sellCommodity } from '../../actions';
 import { AppState } from '../../reducers';
 import { selectActiveHoldings, selectCash } from '../../selectors';
@@ -19,28 +31,80 @@ import { Commodity } from '../game.models';
   templateUrl: './trade.component.html',
   styleUrls: ['./trade.component.scss'],
 })
-export class TradeComponent {
+export class TradeComponent implements OnChanges {
   @Input() price: number;
   @Input() commodity: Commodity;
 
   readonly controls: { buy: FormControl; sell: FormControl };
+
+  readonly buyTotal$: Observable<number | null>;
+  readonly sellTotal$: Observable<number | null>;
+
+  readonly positions: readonly ConnectedPosition[] = [
+    {
+      originX: 'end',
+      originY: 'top',
+      overlayX: 'end',
+      overlayY: 'bottom',
+      offsetY: -4,
+    },
+  ];
+
+  private readonly priceSubject = new ReplaySubject<number>(1);
 
   constructor(
     private readonly store: Store<AppState>,
     formBuilder: FormBuilder,
   ) {
     this.controls = {
-      buy: formBuilder.control(
-        null,
-        [Validators.required],
-        [this.validateBuy()],
-      ),
-      sell: formBuilder.control(
-        null,
-        [Validators.required],
-        [this.validateSell()],
-      ),
+      buy: formBuilder.control(null, {
+        validators: [Validators.required, Validators.min(1)],
+        asyncValidators: [this.validateBuy()],
+        updateOn: 'change',
+      }),
+      sell: formBuilder.control(null, {
+        validators: [Validators.required, Validators.min(1)],
+        asyncValidators: [this.validateSell()],
+        updateOn: 'change',
+      }),
     };
+
+    this.buyTotal$ = combineLatest([
+      this.controls.buy.valueChanges,
+      this.controls.buy.statusChanges,
+      this.priceSubject,
+    ]).pipe(
+      map(([value, status, price]) => {
+        if (status === 'VALID') {
+          return price * value + COMMISSION;
+        } else {
+          return null;
+        }
+      }),
+      shareReplay(1),
+    );
+
+    this.sellTotal$ = combineLatest([
+      this.controls.sell.valueChanges,
+      this.controls.sell.statusChanges,
+      this.priceSubject,
+    ]).pipe(
+      map(([value, status, price]) => {
+        if (status === 'VALID') {
+          return price * value - COMMISSION;
+        } else {
+          return null;
+        }
+      }),
+      shareReplay(1),
+    );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const priceChange = changes['price'];
+    if (priceChange?.currentValue) {
+      this.priceSubject.next(priceChange.currentValue);
+    }
   }
 
   buy(): void {

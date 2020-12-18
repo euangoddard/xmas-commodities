@@ -1,34 +1,33 @@
 <h2>Time's up – it's Christmas!</h2>
 
 <article class="article">
-
-<p>
-  It's December 25th and the Christmas Commodities market is now closed for the
-  season.
-</p>
-<p>
-  You started the month with
-  <span class="positive-text">{{ initialCash | currency }}</span>.
-</p>
-<p>
-  After selling all your commodities you have {{ cash$ | async | currency }},
-  which means you
-  <ng-container *ngIf="change$ | async as change; else breakEven">
-    made a
-    <span class="positive-text" *ngIf="change > 0; else loss"
-      >gain of {{ change | currency }}</span
-    >
-    <ng-template #loss>
-      <span class="negative-text">loss of {{ change | currency }}</span>
+  <p>
+    It's December 25th and the Christmas Commodities market is now closed for
+    the season.
+  </p>
+  <p>
+    You started the month with
+    <span class="positive-text">{{ initialCash | currency }}</span
+    >.
+  </p>
+  <p>
+    After selling all your commodities you have {{ cash$ | async | currency }},
+    which means you
+    <ng-container *ngIf="change$ | async as change; else breakEven">
+      made a
+      <span class="positive-text" *ngIf="change > 0; else loss"
+        >gain of {{ change | currency }}</span
+      >
+      <ng-template #loss>
+        <span class="negative-text">loss of {{ change | currency }}</span>
+      </ng-template>
+    </ng-container>
+    <ng-template #breakEven>
+      broke even!
     </ng-template>
-  </ng-container>
-  <ng-template #breakEven>
-    broke even!
-  </ng-template>
-</p>
-<p class="text-center buttons">
-  <a class="button buy" routerLink="/play">Play again</a>
-  <a class="button sell" routerLink="/">Go home</a>
-</p>
-
+  </p>
+  <p class="text-center buttons">
+    <a class="button buy" routerLink="/play">Play again</a>
+    <a class="button sell" routerLink="/">Go home</a>
+  </p>
 </article>
