@@ -27,6 +27,10 @@ hr {
 span {
   padding: 0.5rem;
 
+  &.no-wrap {
+    white-space: nowrap;
+  }
+
   &.marker-container {
     position: relative;
   }
