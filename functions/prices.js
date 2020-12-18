@@ -16,7 +16,7 @@ const COMMODITIES = [
   {
     id: nextInt(),
     name: 'Spruce trees',
-    colour: '#1b5e20',
+    colour: '#00e676',
   },
   {
     id: nextInt(),
